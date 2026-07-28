@@ -1,0 +1,41 @@
+{
+	"name": "@abiome/iso",
+	"version": "0.1.0",
+	"description": "Parallel autoresearch, built vertically into the Pi coding agent harness",
+	"type": "module",
+	"private": true,
+	"bin": {
+		"iso": "dist/cli.js"
+	},
+	"main": "dist/index.js",
+	"types": "dist/index.d.ts",
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"import": "./dist/index.js"
+		}
+	},
+	"files": [
+		"dist",
+		"public",
+		"README.md"
+	],
+	"scripts": {
+		"build": "tsc -p tsconfig.build.json && shx chmod +x dist/cli.js",
+		"clean": "shx rm -rf dist",
+		"dev": "tsx src/cli.ts",
+		"test": "tsx --test test/*.test.ts"
+	},
+	"dependencies": {
+		"@earendil-works/pi-coding-agent": "0.82.1"
+	},
+	"devDependencies": {
+		"@types/node": "22.19.19",
+		"shx": "0.4.0",
+		"tsx": "4.22.1",
+		"typescript": "5.9.3"
+	},
+	"engines": {
+		"node": ">=22.19.0"
+	}
+}

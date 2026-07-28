@@ -10,6 +10,17 @@
 
 > New issues and PRs from new contributors are auto-closed by default. Maintainers review auto-closed issues daily. See [CONTRIBUTING.md](CONTRIBUTING.md).
 
+# ISO
+
+ISO is Abiome's parallel autoresearch system, built vertically into the Pi agent harness. A read-only
+director proposes competing hypotheses, coding agents test them in isolated git worktrees, a
+deterministic evaluator ranks the results, and the full idea lineage remains visible and steerable
+from a live dashboard.
+
+The first working vertical lives in [`packages/iso`](packages/iso). See
+[`docs/iso-architecture.md`](docs/iso-architecture.md) for the local runtime and secure Cloudflare
+relay design.
+
 # Pi Agent Harness
 
 This is the home of the Pi agent harness project including our self extensible coding agent.

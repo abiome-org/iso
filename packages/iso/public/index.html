@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta
+			name="description"
+			content="ISO parallel autoresearch mission control"
+		/>
+		<title>ISO — Research Mission Control</title>
+		<link rel="stylesheet" href="/styles.css" />
+	</head>
+	<body>
+		<div class="shell">
+			<header class="topbar">
+				<a class="brand" href="/" aria-label="ISO home">
+					<span class="brand-mark">I/O</span>
+					<span>
+						<strong>ISO</strong>
+						<small>RESEARCH SYSTEM</small>
+					</span>
+				</a>
+				<div class="topbar-status">
+					<span class="pulse" aria-hidden="true"></span>
+					<span id="connection-label">LOCAL LINK</span>
+					<span class="divider"></span>
+					<span id="clock">--:--:--</span>
+				</div>
+			</header>
+
+			<main>
+				<section class="mission-strip">
+					<div>
+						<p class="eyebrow">ACTIVE CAMPAIGN</p>
+						<h1 id="campaign-goal">Waiting for a campaign</h1>
+					</div>
+					<div class="mission-actions">
+						<label>
+							<span>ITERATIONS</span>
+							<input id="iterations" type="number" min="1" value="3" />
+						</label>
+						<label>
+							<span>WORKERS</span>
+							<input id="workers" type="number" min="1" max="32" value="4" />
+						</label>
+						<button class="button button-primary" id="run-button" type="button">RUN RESEARCH</button>
+						<button class="button" id="pause-button" type="button">PAUSE</button>
+					</div>
+				</section>
+
+				<section class="kpis" aria-label="Campaign measurements">
+					<article>
+						<span>STATUS</span>
+						<strong id="campaign-status">OFFLINE</strong>
+					</article>
+					<article>
+						<span>CHAMPION</span>
+						<strong id="champion-score">—</strong>
+						<small id="metric-label">NO METRIC</small>
+					</article>
+					<article>
+						<span>EXPERIMENTS</span>
+						<strong id="experiment-count">0</strong>
+						<small id="experiment-detail">0 measured</small>
+					</article>
+					<article>
+						<span>IDEA YIELD</span>
+						<strong id="idea-count">0</strong>
+						<small id="idea-detail">0 queued</small>
+					</article>
+				</section>
+
+				<section class="workbench">
+					<article class="panel graph-panel">
+						<header class="panel-header">
+							<div>
+								<p class="eyebrow">IDEA LINEAGE</p>
+								<h2>Research graph</h2>
+							</div>
+							<div class="legend" aria-label="Graph legend">
+								<span><i class="node idea"></i>idea</span>
+								<span><i class="node experiment"></i>experiment</span>
+								<span><i class="node result"></i>result</span>
+							</div>
+						</header>
+						<div class="canvas-wrap">
+							<canvas id="idea-graph" aria-label="Idea and experiment lineage graph"></canvas>
+							<p class="empty-state" id="graph-empty">Ideas will appear here as ISO researches.</p>
+						</div>
+					</article>
+
+					<aside class="panel swarm-panel">
+						<header class="panel-header">
+							<div>
+								<p class="eyebrow">LIVE HARNESS</p>
+								<h2>Agent swarm</h2>
+							</div>
+							<span class="count-badge" id="worker-count">0 ACTIVE</span>
+						</header>
+						<div id="worker-list" class="worker-list">
+							<p class="empty-copy">No active agents. Start a research pass to spin up the harness.</p>
+						</div>
+					</aside>
+				</section>
+
+				<section class="lower-grid">
+					<article class="panel ideas-panel">
+						<header class="panel-header">
+							<div>
+								<p class="eyebrow">HYPOTHESIS QUEUE</p>
+								<h2>Ideas</h2>
+							</div>
+							<button class="button button-small" id="new-idea-button" type="button">+ ADD IDEA</button>
+						</header>
+						<div class="table-wrap">
+							<table>
+								<thead>
+									<tr>
+										<th>STATUS</th>
+										<th>HYPOTHESIS</th>
+										<th>SOURCE</th>
+										<th>CREATED</th>
+									</tr>
+								</thead>
+								<tbody id="idea-table"></tbody>
+							</table>
+						</div>
+					</article>
+
+					<article class="panel ledger-panel">
+						<header class="panel-header">
+							<div>
+								<p class="eyebrow">PROVENANCE</p>
+								<h2>Evidence ledger</h2>
+							</div>
+						</header>
+						<ol id="event-list" class="event-list"></ol>
+					</article>
+				</section>
+			</main>
+		</div>
+
+		<dialog id="idea-dialog">
+			<form id="idea-form" method="dialog">
+				<header>
+					<div>
+						<p class="eyebrow">HUMAN INPUT</p>
+						<h2>Add an experiment idea</h2>
+					</div>
+					<button class="icon-button" id="close-dialog" type="button" aria-label="Close">×</button>
+				</header>
+				<label>
+					<span>TITLE</span>
+					<input name="title" required placeholder="Cache the hot path" />
+				</label>
+				<label>
+					<span>HYPOTHESIS</span>
+					<textarea name="hypothesis" required placeholder="A falsifiable reason this should move the metric"></textarea>
+				</label>
+				<label>
+					<span>IMPLEMENTATION PLAN</span>
+					<textarea name="implementationPlan" required placeholder="Files, approach, and constraints"></textarea>
+				</label>
+				<footer>
+					<button class="button" id="cancel-dialog" type="button">CANCEL</button>
+					<button class="button button-primary" type="submit">QUEUE IDEA</button>
+				</footer>
+			</form>
+		</dialog>
+
+		<div id="toast" role="status" aria-live="polite"></div>
+		<script>
+			window.ISO_CONTROL_TOKEN = __ISO_CONTROL_TOKEN_JSON__;
+		</script>
+		<script src="/app.js" defer></script>
+	</body>
+</html>
