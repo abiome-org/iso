@@ -1,0 +1,374 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta
+			name="description"
+			content="ISO local research control plane: evidence, uncertainty, workers, and durable progress"
+		/>
+		<title>ISO — Research Control Plane</title>
+		<link rel="stylesheet" href="/styles.css" />
+	</head>
+	<body>
+		<div class="shell">
+			<header class="topbar">
+				<a class="brand" href="/" aria-label="ISO research control plane">
+					<span class="brand-mark">ISO</span>
+					<span>
+						<strong>ISO</strong>
+						<small>LOCAL RESEARCH KERNEL</small>
+					</span>
+				</a>
+				<div class="topbar-status">
+					<span class="pulse" id="connection-pulse" aria-hidden="true"></span>
+					<span id="connection-label">CONNECTING</span>
+					<span class="divider"></span>
+					<span id="kernel-label">KERNEL —</span>
+					<span class="divider"></span>
+					<span id="clock">--:--:--</span>
+				</div>
+			</header>
+
+			<main>
+				<section class="mission">
+					<div class="mission-copy">
+						<div class="mission-kicker">
+							<p class="eyebrow">RESEARCH DIRECTOR</p>
+							<span class="state-pill" id="campaign-status">NO CAMPAIGN</span>
+						</div>
+						<h1 id="campaign-goal">Tell ISO what should get better.</h1>
+						<p id="mission-detail">
+							The agent will inspect the repository, define a protected evaluator, calibrate a baseline,
+							and run the research loop.
+						</p>
+					</div>
+					<aside class="mission-control" aria-label="Research controls">
+						<div class="control-context">
+							<span>ACTIVE GENERATION</span>
+							<strong id="generation-label">—</strong>
+							<small id="control-hint">Mission configuration lives in the conversation.</small>
+						</div>
+						<div class="control-buttons">
+							<button class="button button-primary" id="start-button" type="button" disabled>
+								START
+							</button>
+							<button class="button" id="pause-button" type="button" disabled>PAUSE</button>
+							<button class="button button-danger" id="stop-button" type="button" disabled>
+								STOP
+							</button>
+						</div>
+						<form
+							id="campaign-message-form"
+							class="campaign-message"
+							data-capability="campaign-message"
+						>
+							<label for="campaign-message-input">GUIDE THE NEXT DURABLE BOUNDARY</label>
+							<div>
+								<input
+									id="campaign-message-input"
+									name="message"
+									type="text"
+									maxlength="4000"
+									autocomplete="off"
+									placeholder="Add evidence, a constraint, or a direction…"
+									disabled
+								/>
+								<button class="button" id="campaign-message-send" type="submit" disabled>
+									QUEUE NOTE
+								</button>
+							</div>
+							<small>Primary conversation stays in ISO; notes become planner context.</small>
+						</form>
+					</aside>
+				</section>
+
+				<section class="scoreboard" aria-label="Campaign measurements">
+					<article>
+						<span>BASELINE</span>
+						<strong id="baseline-score">—</strong>
+						<small id="metric-label">NO METRIC</small>
+					</article>
+					<article class="champion-kpi">
+						<span>CONFIRMED CHAMPION</span>
+						<strong id="champion-score">—</strong>
+						<small id="champion-label">AWAITING EVIDENCE</small>
+						<small id="confidence-label">NO FINAL-STEP POST-SELECTION EVIDENCE</small>
+					</article>
+					<article>
+						<span>VS. ORIGINAL BASELINE</span>
+						<strong id="delta-score">—</strong>
+						<small id="delta-label">CUMULATIVE POINT ESTIMATE</small>
+					</article>
+					<article>
+						<span>GENERATIONS</span>
+						<strong id="generation-count">0</strong>
+						<small id="generation-detail">0 complete</small>
+					</article>
+					<article>
+						<span>EXPERIMENTS</span>
+						<strong id="experiment-count">0</strong>
+						<small id="experiment-detail">0 confirmed</small>
+					</article>
+				</section>
+
+				<section class="budget-strip" aria-label="Research budget">
+					<div class="budget-heading">
+						<span class="eyebrow">RUNWAY</span>
+						<strong id="budget-summary">No calibrated budget</strong>
+					</div>
+					<div class="budget-meter">
+						<div>
+							<span>GENERATIONS</span>
+							<small id="generation-budget-label">0 / 0</small>
+						</div>
+						<progress
+							id="generation-progress"
+							max="1"
+							value="0"
+							aria-label="Generation budget consumed"
+						></progress>
+					</div>
+					<div class="budget-meter">
+						<div>
+							<span>EXPERIMENTS</span>
+							<small id="experiment-budget-label">0 / 0</small>
+						</div>
+						<progress
+							id="experiment-progress"
+							max="1"
+							value="0"
+							aria-label="Experiment budget consumed"
+						></progress>
+					</div>
+					<div class="budget-meter">
+						<div>
+							<span>PLATEAU</span>
+							<small id="plateau-budget-label">0 / 0</small>
+						</div>
+						<progress
+							class="plateau"
+							id="plateau-progress"
+							max="1"
+							value="0"
+							aria-label="Plateau budget consumed"
+						></progress>
+					</div>
+				</section>
+
+				<section class="workbench">
+					<article class="panel graph-panel">
+						<header class="panel-header">
+							<div>
+								<p class="eyebrow">IDEAS AS VERSIONED EVIDENCE</p>
+								<h2>Progress graph</h2>
+							</div>
+							<div class="legend" aria-label="Graph legend">
+								<span><i class="node generation"></i>generation</span>
+								<span><i class="node idea"></i>idea</span>
+								<span><i class="node experiment"></i>experiment</span>
+								<span><i class="node result"></i>result</span>
+								<span><i class="node reflection"></i>reflection</span>
+							</div>
+						</header>
+						<div class="canvas-wrap">
+							<canvas
+								id="idea-graph"
+								role="img"
+								aria-label="Campaign research lineage graph"
+								aria-describedby="graph-summary"
+							></canvas>
+							<div class="empty-state" id="graph-empty">
+								<strong>No evidence yet</strong>
+								<span>ISO will build the graph as hypotheses become measured commits.</span>
+							</div>
+						</div>
+						<details class="lineage-drilldown" open>
+							<summary id="graph-summary">No operational lineage yet</summary>
+							<ol id="lineage-list"></ol>
+						</details>
+					</article>
+
+					<aside class="panel swarm-panel">
+						<header class="panel-header">
+							<div>
+								<p class="eyebrow">LIVE HARNESS</p>
+								<h2>Workers</h2>
+							</div>
+							<span class="count-badge" id="worker-count">0 ACTIVE</span>
+						</header>
+						<div id="worker-list" class="worker-list" aria-live="polite">
+							<div class="empty-copy">
+								<strong>Workers are idle</strong>
+								<span>Agents appear here while isolated experiments are running.</span>
+							</div>
+						</div>
+					</aside>
+				</section>
+
+				<section class="evidence-grid">
+					<article class="panel experiments-panel">
+						<header class="panel-header">
+							<div>
+								<p class="eyebrow">CANDIDATES + CONTROLS</p>
+								<h2>Experiment evidence</h2>
+							</div>
+							<span class="panel-note" id="evidence-window-note"
+								>Exploratory paired screen · fresh post-selection promotion gate</span
+							>
+						</header>
+						<div class="table-wrap">
+							<table>
+								<thead>
+									<tr>
+										<th>GEN</th>
+										<th>HYPOTHESIS</th>
+										<th>STATE</th>
+										<th>SCREEN MEAN</th>
+										<th>EXPLORATORY SCREEN Δ / LCB</th>
+										<th>FRESH POST-SELECTION REPLICATION</th>
+										<th>DECISION</th>
+									</tr>
+								</thead>
+								<tbody id="experiment-table"></tbody>
+							</table>
+							<p class="table-empty" id="experiment-empty">No experiments have been provisioned.</p>
+						</div>
+					</article>
+
+					<aside class="panel generations-panel">
+						<header class="panel-header">
+							<div>
+								<p class="eyebrow">DURABLE CHECKPOINTS</p>
+								<h2>Generations</h2>
+							</div>
+							<span class="panel-note" id="generation-window-note">0 visible</span>
+						</header>
+						<div class="generation-list" id="generation-list">
+							<div class="empty-copy">
+								<strong>No generations yet</strong>
+								<span>Every pass is pinned to a known git commit.</span>
+							</div>
+						</div>
+					</aside>
+				</section>
+
+					<section class="learning-grid">
+					<article class="panel reflection-panel">
+						<header class="panel-header">
+							<div>
+								<p class="eyebrow">FLYWHEEL MEMORY</p>
+								<h2>Latest reflection</h2>
+							</div>
+							<span class="panel-note" id="reflection-generation">NO REFLECTION</span>
+						</header>
+						<div class="reflection-body">
+							<p class="reflection-summary" id="reflection-summary">
+								ISO preserves useful failures and measured dead ends for the next planner pass.
+							</p>
+							<div class="reflection-columns">
+								<div>
+									<h3>LEARNED</h3>
+									<ul id="lesson-list"></ul>
+								</div>
+								<div>
+									<h3>DEAD ENDS</h3>
+									<ul id="dead-end-list"></ul>
+								</div>
+								<div>
+									<h3>NEXT FOCUS</h3>
+									<ul id="next-focus-list"></ul>
+								</div>
+							</div>
+						</div>
+					</article>
+
+					<aside class="panel ledger-panel">
+						<header class="panel-header">
+							<div>
+								<p class="eyebrow">APPEND-ONLY PROVENANCE</p>
+								<h2>Evidence ledger</h2>
+							</div>
+							<span class="panel-note" id="ledger-window-note">0 visible</span>
+						</header>
+						<ol id="event-list" class="event-list"></ol>
+						</aside>
+					</section>
+
+					<section class="operations-grid">
+						<article class="panel guidance-panel">
+							<header class="panel-header">
+								<div>
+									<p class="eyebrow">OPERATOR → FLYWHEEL</p>
+									<h2>Guidance queue</h2>
+								</div>
+								<span class="panel-note" id="guidance-summary">0 notes</span>
+							</header>
+							<ol id="guidance-list" class="guidance-list">
+								<li class="empty-copy">
+									<strong>No guidance queued</strong>
+									<span>Conversation notes appear here when accepted by the durable mission.</span>
+								</li>
+							</ol>
+						</article>
+
+						<aside class="panel completion-panel">
+							<header class="panel-header">
+								<div>
+									<p class="eyebrow">TERMINAL ARTIFACT</p>
+									<h2>Completion + handoff</h2>
+								</div>
+								<span class="panel-note" id="completion-state">IN PROGRESS</span>
+							</header>
+							<div id="completion-report" class="completion-report">
+								<div class="empty-copy">
+									<strong>Research is still live</strong>
+									<span>The final report and exact champion commit will land here.</span>
+								</div>
+							</div>
+						</aside>
+					</section>
+
+					<footer class="trust-footer">
+					<div>
+						<span>EVALUATOR</span>
+						<code id="evaluator-digest">not calibrated</code>
+					</div>
+					<div>
+						<span>SOURCE COMMIT</span>
+						<code id="source-commit">—</code>
+					</div>
+					<div>
+						<span>RUNTIME</span>
+						<code id="runtime-provenance">—</code>
+					</div>
+					<div>
+						<span>SELECTION CONTRACT</span>
+						<code id="selection-contract">—</code>
+					</div>
+					<div>
+						<span>FROZEN EVALUATION PLAN</span>
+						<code id="evaluation-plan">—</code>
+					</div>
+					<div>
+						<span>ADMISSION + CONTROL</span>
+						<code id="control-barrier">—</code>
+					</div>
+					<p>
+						Candidates run in isolated worktrees against a frozen evaluator and dependency snapshot.
+						Promotion uses one fresh, persisted paired block per opportunity; the displayed claim states
+						whether it is bounded-FWER or assumption-based. Remote control requires an authenticated relay
+						with separate read and control credentials.
+					</p>
+				</footer>
+			</main>
+		</div>
+
+		<div id="toast" role="status" aria-live="polite"></div>
+			<script nonce="__ISO_SCRIPT_NONCE__">
+				window.ISO_CONTROL_TOKEN = __ISO_CONTROL_TOKEN_JSON__;
+				window.ISO_CAN_CONTROL = __ISO_CAN_CONTROL_JSON__;
+			</script>
+		<script src="/app.js" defer></script>
+	</body>
+</html>

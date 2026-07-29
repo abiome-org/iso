@@ -373,6 +373,32 @@ describe("AgentSession model and extension characterization", () => {
 		).toBe(true);
 	});
 
+	it("does not call the provider when a before_agent_start precondition blocks", async () => {
+		const harness = await createHarness({
+			extensionFactories: [
+				(pi) => {
+					pi.on("before_agent_start", async () => ({
+						block: true,
+						reason: "durable objective receipt unavailable",
+					}));
+				},
+			],
+		});
+		harnesses.push(harness);
+		let providerCalls = 0;
+		harness.setResponses([
+			() => {
+				providerCalls += 1;
+				return fauxAssistantMessage("must not run");
+			},
+		]);
+
+		await expect(harness.session.prompt("start research")).rejects.toThrow("durable objective receipt unavailable");
+
+		expect(providerCalls).toBe(0);
+		expect(harness.session.messages).toHaveLength(0);
+	});
+
 	it("bindExtensions emits session_start and reload emits session_shutdown then session_start", async () => {
 		const lifecycleEvents: string[] = [];
 		const harness = await createHarness({

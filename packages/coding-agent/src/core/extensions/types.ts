@@ -1098,6 +1098,10 @@ export interface BeforeAgentStartEventResult {
 	message?: Pick<CustomMessage, "customType" | "content" | "display" | "details">;
 	/** Replace the system prompt for this turn. If multiple extensions return this, they are chained. */
 	systemPrompt?: string;
+	/** Prevent the agent/provider turn from starting. Use for fail-closed preconditions. */
+	block?: boolean;
+	/** Human-readable reason surfaced when `block` is true. */
+	reason?: string;
 }
 
 export interface SessionBeforeSwitchResult {

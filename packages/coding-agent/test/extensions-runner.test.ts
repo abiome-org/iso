@@ -741,6 +741,32 @@ describe("ExtensionRunner", () => {
 				systemPrompt: "base\nfirst\nsecond",
 			});
 		});
+
+		it("allows a fail-closed extension to block the provider turn", async () => {
+			const extCode = `
+				export default function(pi) {
+					pi.on("before_agent_start", async () => ({
+						block: true,
+						reason: "durable precondition unavailable",
+					}));
+				}
+			`;
+			fs.writeFileSync(path.join(extensionsDir, "before-agent-start-block.ts"), extCode);
+
+			const result = await discoverAndLoadExtensions([], tempDir, tempDir);
+			expect(result.errors).toEqual([]);
+			const runner = new ExtensionRunner(result.extensions, result.runtime, tempDir, sessionManager, modelRegistry);
+			runner.bindCore(extensionActions, extensionContextActions);
+
+			const blocked = await runner.emitBeforeAgentStart("hello", undefined, "base", {
+				cwd: tempDir,
+			});
+
+			expect(blocked).toEqual({
+				block: true,
+				reason: "durable precondition unavailable",
+			});
+		});
 	});
 
 	describe("tool_result chaining", () => {
