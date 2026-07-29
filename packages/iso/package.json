@@ -1,7 +1,7 @@
 {
 	"name": "@abiome/iso",
 	"version": "0.1.0",
-	"description": "Parallel autoresearch, built vertically into the Pi coding agent harness",
+	"description": "Conversational autoresearch, built vertically into the Pi coding agent harness",
 	"type": "module",
 	"private": true,
 	"bin": {
@@ -27,7 +27,10 @@
 		"test": "tsx --test test/*.test.ts"
 	},
 	"dependencies": {
-		"@earendil-works/pi-coding-agent": "0.82.1"
+		"@anthropic-ai/sandbox-runtime": "0.0.26",
+		"@earendil-works/pi-ai": "0.82.1",
+		"@earendil-works/pi-coding-agent": "0.82.1",
+		"shell-quote": "1.10.0"
 	},
 	"devDependencies": {
 		"@types/node": "22.19.19",

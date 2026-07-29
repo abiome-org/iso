@@ -1,29 +1,51 @@
-<p align="center">
-  <a href="https://pi.dev">
-    <img alt="pi logo" src="https://pi.dev/logo-auto.svg" width="128">
-  </a>
-</p>
-<p align="center">
-  <a href="https://discord.com/invite/3cU7Bz4UPx"><img alt="Discord" src="https://img.shields.io/badge/discord-community-5865F2?style=flat-square&logo=discord&logoColor=white" /></a>
-  <a href="https://www.npmjs.com/package/@earendil-works/pi-coding-agent"><img alt="npm" src="https://img.shields.io/npm/v/@earendil-works/pi-coding-agent?style=flat-square" /></a>
-</p>
-
-> New issues and PRs from new contributors are auto-closed by default. Maintainers review auto-closed issues daily. See [CONTRIBUTING.md](CONTRIBUTING.md).
-
 # ISO
 
-ISO is Abiome's parallel autoresearch system, built vertically into the Pi agent harness. A read-only
-director proposes competing hypotheses, coding agents test them in isolated git worktrees, a
-deterministic evaluator ranks the results, and the full idea lineage remains visible and steerable
-from a live dashboard.
+ISO is Abiome's local-first conversational autoresearch system, built vertically on a fork of Pi. Tell
+it what should improve. ISO validates and freezes a protected evaluator, durably accepts the mission,
+calibrates a baseline, runs competing coding agents in isolated git worktrees, and preserves durable
+idea-and-evidence lineage, including negative results. Exploratory screening nominates one candidate
+per generation; promotion requires a fresh, persisted post-selection replication block with its
+method and assumptions recorded. Research starts from an immutable source commit built from HEAD
+plus admitted tracked, deleted, and non-ignored untracked worktree changes—subject to documented
+safety and dependency-tree exclusions—without disturbing the user's branch, index, or checkout.
 
-The first working vertical lives in [`packages/iso`](packages/iso). See
-[`docs/iso-architecture.md`](docs/iso-architecture.md) for the local runtime and secure Cloudflare
-relay design.
+The durable local product lives in [`packages/iso`](packages/iso), including its live operator
+dashboard. See [`docs/iso-architecture.md`](docs/iso-architecture.md) for the research state machine,
+trust model, and planned outbound-only Cloudflare relay design. The competitive research behind the
+product boundary is in [`docs/research-landscape.md`](docs/research-landscape.md).
+
+ISO does not claim an empty category. [CORAL](https://github.com/Human-Agent-Society/CORAL) and
+[OpenResearch](https://github.com/alphaXiv/openresearch-cli) are genuinely close parallel
+autoresearch systems. ISO's narrower differentiation is vertical Pi-harness enforcement: durable
+one-turn mission admission, a long-lived kernel, isolated evaluator/candidate boundaries, frozen
+opaque post-selection replication, assumption-labeled promotion evidence, at-least-once progress
+delivery back into the conversation, and a causal idea/evidence graph.
+
+## Run ISO from source
+
+`@abiome/iso` is currently a private workspace package and is not published to npm. To run the current
+product from this repository:
+
+```bash
+git clone https://github.com/abiome-org/iso.git
+cd iso
+npm ci --ignore-scripts
+npm run build:offline
+
+cd /path/to/target-repository
+node /path/to/iso/packages/iso/dist/cli.js
+```
+
+Pass the objective as an argument to start immediately:
+
+```bash
+node /path/to/iso/packages/iso/dist/cli.js \
+  "Make the parser materially faster without changing its output"
+```
 
 # Pi Agent Harness
 
-This is the home of the Pi agent harness project including our self extensible coding agent.
+ISO includes its Pi coding-agent harness fork and the underlying runtime packages.
 
 * **[@earendil-works/pi-coding-agent](packages/coding-agent)**: Interactive coding agent CLI
 * **[@earendil-works/pi-agent-core](packages/agent)**: Agent runtime with tool calling and state management
@@ -38,6 +60,7 @@ To learn more about Pi:
 
 | Package | Description |
 |---------|-------------|
+| **[@abiome/iso](packages/iso)** | Local-first conversational autoresearch agent, kernel, and operator dashboard |
 | **[@earendil-works/pi-ai](packages/ai)** | Unified multi-provider LLM API (OpenAI, Anthropic, Google, etc.) |
 | **[@earendil-works/pi-agent-core](packages/agent)** | Agent runtime with tool calling and state management |
 | **[@earendil-works/pi-coding-agent](packages/coding-agent)** | Interactive coding agent CLI |
@@ -56,6 +79,9 @@ If you need stronger boundaries, containerize or sandbox Pi. See [packages/codin
 - **OpenShell**: run the whole `pi` process in a policy-controlled sandbox.
 
 ## Contributing
+
+> New issues and PRs from new contributors are auto-closed by default. Maintainers review auto-closed
+> issues daily.
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines and [AGENTS.md](AGENTS.md) for project-specific rules (for both humans and agents).  Longer term plans for Pi can also be found in [RFCs](https://rfc.earendil.com/keyword/pi/).
 

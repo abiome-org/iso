@@ -1228,6 +1228,9 @@ export class AgentSession {
 				this._baseSystemPrompt,
 				this._baseSystemPromptOptions,
 			);
+			if (result?.block === true) {
+				throw new Error(result.reason ?? "Agent start was blocked by an extension.");
+			}
 			// Add all custom messages from extensions
 			if (result?.messages) {
 				for (const msg of result.messages) {

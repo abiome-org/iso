@@ -115,6 +115,8 @@ const buildBuiltinKeybindings = (resolvedKeybindings: KeybindingsConfig): BuiltI
 interface BeforeAgentStartCombinedResult {
 	messages?: NonNullable<BeforeAgentStartEventResult["message"]>[];
 	systemPrompt?: string;
+	block?: boolean;
+	reason?: string;
 }
 
 /**
@@ -1108,6 +1110,12 @@ export class ExtensionRunner {
 
 					if (handlerResult) {
 						const result = handlerResult as BeforeAgentStartEventResult;
+						if (result.block === true) {
+							return {
+								block: true,
+								reason: result.reason,
+							};
+						}
 						if (result.message) {
 							messages.push(result.message);
 						}
